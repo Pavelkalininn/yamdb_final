@@ -1,5 +1,5 @@
+from django.rest_framework import routers
 from django.urls import include, path
-from rest_framework import routers
 
 from .views import (CategoryViewSet, CommentViewSet, GenreViewSet,
                     ReviewViewSet, SignUpView, TitleViewSet, TokenView,

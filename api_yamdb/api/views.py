@@ -1,15 +1,14 @@
 from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework import filters, status, viewsets
+from rest_framework.decorators import action
 from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.generics import get_object_or_404
-from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenViewBase
 
-from reviews.models import Category, Genre, Review, Title, User
+from ..reviews.models import Category, Genre, Review, Title, User
 from .filters import TitleFilter
 from .permissions import AdminOnly, AdminOrReadOnly, AuthorOrHasRoleOrReadOnly
 from .serializers import (CategorySerializer, CommentSerializer,
@@ -29,7 +28,7 @@ class GenreViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         if not self.kwargs.get('pk').isnumeric():
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        super().retrieve(request, *args, **kwargs)
+        return super().retrieve(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
         instance = get_object_or_404(Genre, slug=self.kwargs.get('pk'))
@@ -39,7 +38,7 @@ class GenreViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         if not self.kwargs.get('pk').isnumeric():
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        super().update(request, *args, **kwargs)
+        return super().update(request, *args, **kwargs)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -53,7 +52,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         if not self.kwargs.get('pk').isnumeric():
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        super().retrieve(request, *args, **kwargs)
+        return super().retrieve(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
         instance = get_object_or_404(Category, slug=self.kwargs.get('pk'))
@@ -63,7 +62,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         if not self.kwargs.get('pk').isnumeric():
             return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        super().update(request, *args, **kwargs)
+        return super().update(request, *args, **kwargs)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
@@ -149,8 +148,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_object(self):
         user_username = self.kwargs['pk']
-        user = get_object_or_404(User, username=user_username)
-        return user
+        return get_object_or_404(User, username=user_username)
 
     @action(methods=['get', 'patch', 'put', 'delete'], detail=False)
     def me(self, request):
@@ -159,7 +157,7 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer = self.get_serializer(user)
             return Response(serializer.data)
 
-        if request.method == 'PATCH' or request.method == 'PUT':
+        elif request.method == 'PATCH' or request.method == 'PUT':
             partial = True if request.method == 'PATCH' else False
             user = User.objects.get(username=request.user.username)
             data = request.data.copy()
@@ -171,14 +169,13 @@ class UserViewSet(viewsets.ModelViewSet):
             )
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
-
             if getattr(user, '_prefetched_objects_cache', None):
                 user._prefetched_objects_cache = {}
-
             return Response(serializer.data)
 
-        if request.method == 'DELETE':
+        elif request.method == 'DELETE':
             raise MethodNotAllowed(method='DELETE')
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def get_permissions(self):
         if self.action == 'me':
