@@ -212,6 +212,6 @@
 
     ]
     
-
+![Workflow](https://github.com/Pavelkalininn/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 
 Авторы: [__Паша Калинин__](https://github.com/Pavelkalininn), [__Марина Бузина__](https://github.com/Marina-ui), [__Виталий Осташов__](https://github.com/h0t0sh0)
