@@ -9,7 +9,6 @@ services:
     env_file:
       - ./.env
   web:
-    build: ../api_yamdb/
     image: guguruge:api_yamdb
     restart: always
     volumes:
