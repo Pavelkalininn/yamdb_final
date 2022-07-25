@@ -29,10 +29,10 @@
 ### Для запуска проекта, применения миграций, создания суперюзера, загрузки статики и добавления в БД данных из фикстур соответственно необходимо в папке infra выполнить команды:
     
     docker-compose up -d --build
-    docker-compose exec web python manage.py migrate
-    docker-compose exec web python manage.py createsuperuser
-    docker-compose exec web python manage.py collectstatic --no-input
-    docker-compose exec web python manage.py loaddata fixtures.json
+    sudo docker-compose exec web python manage.py migrate
+    sudo docker-compose exec web python manage.py createsuperuser
+    sudo docker-compose exec web python manage.py collectstatic --no-input
+    sudo docker-compose exec web python manage.py loaddata fixtures.json
 
 после чего будет собран и запущен контейнер, админка доступна по адресу:  
 
