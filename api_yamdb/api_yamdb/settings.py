@@ -13,7 +13,12 @@ SECRET_KEY = os.getenv(
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['51.250.108.40', 'localhost', 'https://kalinin.hopto.org/']
+ALLOWED_HOSTS = [
+    '51.250.108.40',
+    'http://127.0.0.1/',
+    'localhost',
+    'https://kalinin.hopto.org/'
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -60,37 +65,37 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'api_yamdb.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE':
-            os.getenv(
-                'DB_ENGINE',
-                default='django.db.backends.postgresql'),
-        'NAME':
-            os.getenv(
-                'DB_NAME',
-                default='postgres'),
-        'USER':
-            os.getenv(
-                'POSTGRES_USER',
-                default='postgres'),
-        'PASSWORD':
-            os.getenv(
-                'POSTGRES_PASSWORD',
-                default='postgres'
-            ),
-        'HOST':
-            os.getenv(
-                'DB_HOST',
-                default='db'
-            ),
-        'PORT':
-            os.getenv(
-                'DB_PORT',
-                default='5432'
-            )
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE':
+#             os.getenv(
+#                 'DB_ENGINE',
+#                 default='django.db.backends.postgresql'),
+#         'NAME':
+#             os.getenv(
+#                 'DB_NAME',
+#                 default='postgres'),
+#         'USER':
+#             os.getenv(
+#                 'POSTGRES_USER',
+#                 default='postgres'),
+#         'PASSWORD':
+#             os.getenv(
+#                 'POSTGRES_PASSWORD',
+#                 default='postgres'
+#             ),
+#         'HOST':
+#             os.getenv(
+#                 'DB_HOST',
+#                 default='db'
+#             ),
+#         'PORT':
+#             os.getenv(
+#                 'DB_PORT',
+#                 default='5432'
+#             )
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
