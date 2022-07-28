@@ -14,10 +14,13 @@ SECRET_KEY = os.getenv(
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    'http://51.250.108.40/',
     '51.250.108.40',
-    'http://127.0.0.1/',
+    '127.0.0.1',
     'localhost',
-    'https://kalinin.hopto.org/'
+    'kalinin.hopto.org',
+    'http://kalinin.hopto.org/',
+    '/'
 ]
 
 INSTALLED_APPS = [
