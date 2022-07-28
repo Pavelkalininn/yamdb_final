@@ -109,6 +109,5 @@ dmypy.json
 
 .mypy_cache
 
-static/
 media/
 
