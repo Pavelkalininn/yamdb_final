@@ -8,7 +8,6 @@ from rest_framework.exceptions import NotFound
 from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import AccessToken
-
 from reviews.models import (CODE_LENGTH, Category, Comment, Genre, Review,
                             Title, User)
 
