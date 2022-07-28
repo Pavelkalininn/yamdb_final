@@ -1,4 +1,4 @@
-from django.rest_framework import routers
+from rest_framework import routers
 from django.urls import include, path
 
 from .views import (CategoryViewSet, CommentViewSet, GenreViewSet,
