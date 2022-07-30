@@ -13,7 +13,6 @@ services:
     image: guguruge/api_yamdb
     restart: always
     volumes:
-      - ../api_yamdb/static/redoc.yaml:/app/static/redoc.yaml
       - static_value:/app/static/
       - media_value:/app/media/
     depends_on:
