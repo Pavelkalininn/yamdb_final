@@ -46,11 +46,12 @@ jobs:
         with:
           push: true
           context: api_yamdb
-          tags: guguruge/api_yamdb:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/api_yamdb:latest
 
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
+    if: success() && github.ref == 'refs/heads/master'
     steps:
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
@@ -60,10 +61,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-
             sudo docker-compose stop
             sudo docker-compose rm web
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/api_yamdb:latest
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
@@ -71,6 +70,7 @@ jobs:
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+            echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             sudo docker-compose up -d
 
   send_message:
