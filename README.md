@@ -1,13 +1,13 @@
-# Проект YaMDb
+# YaMDb project
 
-«Отзывы на произведения»
+«Reviews of works»
 
-## Описание
+## Description
 
-Проект собирает отзывы пользователей на произведения. Произведения делятся на категории книги, фильмы и музыка.
+The project collects user reviews of the works. The works are divided into categories of books, films and music.
 
 ![Workflow](https://github.com/Pavelkalininn/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
-## Технологии
+## Technologies
 
     asgiref==3.2.10
     requests==2.26.0
@@ -21,14 +21,14 @@
     pytz==2020.1
     sqlparse==0.3.1
 
-### Проект доступен по адресу http://51.250.108.40 или http://kalinin.hopto.org/, все дальнейшие описания запросов сделаны на этих доменах
-## Шаблон наполнения env-файла лежит по адресу: 
+### The project is available at http://51.250.108.40 or http://kalinin.hopto.org /, all further descriptions of requests are made on these domains (at the moment the server is disabled)
+## The template for filling the env file lies at:
 
 [infra/example.env](./infra/example.env)
 
-## Запуск проекта:
+## Project launch:
 
-### Для запуска проекта, применения миграций, создания суперюзера, загрузки статики и добавления в БД данных из фикстур соответственно необходимо в папке infra выполнить команды:
+### To launch a project, apply migrations, create a superuser, load static and add data from fixtures to the database, respectively, you need to run the commands in the infra folder:
     
     docker-compose up -d --build
     sudo docker-compose exec web python manage.py migrate
@@ -36,70 +36,69 @@
     sudo docker-compose exec web python manage.py collectstatic --no-input
     sudo docker-compose exec web python manage.py loaddata fixtures.json
 
-после чего будет собран и запущен контейнер, админка доступна по адресу:  
+after that, the container will be assembled and launched, the admin panel is available at:
 
     /admin/
 
 
-для остановки контейнера необходимо в папке infra выполнить:
+to stop the container, run in the infra folder:
 
      docker-compose down -v
 
 
-## Документация с примерами запросов доступна по адресу:
+## Documentation with sample requests is available at:
 
     /redoc/
 
-## Самостоятельная регистрация новых пользователей:
+## Self-registration of new users:
 
-Пользователь отправляет POST-запрос с параметрами email  и username на эндпоинт
+The user sends a POST request with the email and username parameters to the endpoint
    
     /api/v1/auth/signup/
 
-Сервис отправляет письмо с кодом подтверждения на указанный адрес.
+The service sends an email with a confirmation code to the specified address.
 
-Пользователь отправляет POST-запрос с параметрами username и confirmation_code на эндпоинт
+The user sends a POST request with the username and confirmation_code parameters to the endpoint
 
     /api/v1/auth/token/
 
-В ответ на запрос приходит токен, который необходимо передавать в заголовке всех запросов с параметром Bearer
+In response to the request, a token is received, which must be passed in the header of all requests with the Bearer parameter
 
-После регистрации и получения токена пользователь может отправить PATCH-запрос на эндпоинт
+After registering and receiving the token, the user can send a PATCH request to the endpoint.
     
     /api/v1/users/me/ 
 
-и заполнить поля в своём профайле
+and fill in the fields in your profile
 
-## Создание пользователя администратором
+## Creating a user by an administrator
 
-Пользователя может создать администратор — через админ-зону сайта или через POST-запрос на специальный эндпоинт 
+The user can be created by the administrator — through the admin zone of the site or through a POST request for a special endpoint
 
     /api/v1/users/
 
-(описание полей запроса для этого случая — в документации). В этот момент письмо с кодом подтверждения пользователю отправлять не нужно.
-После этого пользователь должен самостоятельно отправить свой email и username на эндпоинт
+(the description of the request fields for this case is in the documentation). At this point, the user does not need to send an email with a confirmation code.
+After that, the user must independently send his email and username to the endpoint
 
     /api/v1/auth/signup/
 
-в ответ ему должно прийти письмо с кодом подтверждения.
-Далее пользователь отправляет POST-запрос с параметрами username и confirmation_code на эндпоинт 
+in response, he should receive an email with a confirmation code.
+Next, the user sends a POST request with the username and confirmation_code parameters to the endpoint
 
     /api/v1/auth/token/
 
-в ответе на запрос ему приходит token (JWT-токен), как и при самостоятельной регистрации.
+in response to the request, he receives a token (JWT token), as with self-registration.
 
-## Примеры запросов
+## Request examples
 
-
-Сам API доступен по адресу
+API доступен по URL
 
     GET..../api/v1/
 
-Примеры запросов к API:
+Examples of API requests:
 
-Пример POST-запроса с токеном Администратора (Добавлять и вносить изменения в категории может только администратор, чтение доступно любому незарегистрированному пользователю): 
+Example of a POST request with an Administrator token (Only an administrator can add and make changes to categories, reading is available to any unregistered user):
 
-Добавление новой категории:
+Adding a new category:
 
     POST .../api/v1/categories/
 
@@ -108,16 +107,16 @@
         "slug": "string"
     }
 
-Ответ:
+Answer:
     
     {
         "name": "string",
         "slug": "string"
     }
 
-Пример POST-запроса с токеном Администратора (Добавлять и вносить изменения в жанры может только администратор, чтение доступно любому незарегистрированному пользователю): 
+Example of a POST request with an Administrator token (Only an administrator can add and make changes to genres, reading is available to any unregistered user):
 
-Добавление жанра:
+Adding a genre:
 
     POST .../api/v1/genres/
 
@@ -126,16 +125,16 @@
         "slug": "string"
     }
 
-Ответ:
+Answer:
 
     {
         "name": "string",
         "slug": "string"
     }
 
-Пример POST-запроса с токеном Администратора (Добавлять и вносить изменения в произведения может только администратор, чтение доступно любому незарегистрированному пользователю): 
+Example of a POST request with an Administrator token (Only an administrator can add and make changes to works, reading is available to any unregistered user):
 
-Добавление произведения:
+Adding a work:
 
     POST .../api/v1/titles/
 
@@ -150,7 +149,7 @@
         "category": "string"
     }
 
-Ответ:
+Answer:
 
     {
         "id": 0,
@@ -173,16 +172,15 @@
     }
 
 
-Пример GET-запроса незарегистрированного пользователя (без токена):
+Example of an unregistered user's GET request (without a token):
 
-Получаем список всех произведений/жанров/категорий по 5 на странице.
+We get a list of all the works /genres/ categories of 5 on the page.
 
     GET .../api/v1/titles/
     GET .../api/v1/genres/
     GET .../api/v1/categories/
 
-Ответ (для произведений):
-
+Answer (for works):
     [
         {
             "count": 0,
@@ -215,4 +213,4 @@
     ]
 
 
-Авторы: [__Паша Калинин__](https://github.com/Pavelkalininn), [__Марина Бузина__](https://github.com/Marina-ui), [__Виталий Осташов__](https://github.com/h0t0sh0)
+Authors: [__Pavel Kalinin__](https://github.com/Pavelkalininn), [__Marina Buzina__](https://github.com/Marina-ui), [__Vitaly Ostashov__](https://github.com/h0t0sh0)
